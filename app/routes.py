@@ -118,6 +118,7 @@ def handle_books():
 #     return book
         
 # ==================== GET ALL BOOKS
+# original
 # @books_bp.route("", methods=["GET"])
 # def handle_books():
 #     books_response = []
@@ -129,6 +130,29 @@ def handle_books():
 #                 "description": book.description
 #             }
 #         )
+#     return jsonify(books_response)
+
+# revised for query param
+# @books_bp.route("", methods=["GET"])
+# def handle_books():
+
+#     # this code replaces the previous query all code
+#     title_query = request.args.get("title")
+    
+#     if title_query:
+#         books = Book.query.filter_by(title=title_query)
+#     else:
+#         books = Book.query.all()
+#     # end of the new code
+
+#     books_response = []
+#     for book in books:
+#         books_response.append({
+#             "id": book.id,
+#             "title": book.title,
+#             "description": book.description
+#         })
+
 #     return jsonify(books_response)
 
 
