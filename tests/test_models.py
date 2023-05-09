@@ -1,5 +1,6 @@
 from app.models.book import Book
 
+
 def test_to_dict_no_missing_data():
     # Arrange
     test_data = Book(id = 1,
