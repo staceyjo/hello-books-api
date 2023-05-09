@@ -1,4 +1,5 @@
 from app.models.book import Book
+import pytest
 
 
 def test_to_dict_no_missing_data():
@@ -16,6 +17,7 @@ def test_to_dict_no_missing_data():
     assert result["title"] == "Ocean Book"
     assert result["description"] == "watr 4evr"
 
+
 def test_to_dict_missing_id():
     # Arrange
     test_data = Book(title="Ocean Book",
@@ -29,6 +31,7 @@ def test_to_dict_missing_id():
     assert result["id"] is None
     assert result["title"] == "Ocean Book"
     assert result["description"] == "watr 4evr"
+
 
 def test_to_dict_missing_title():
     # Arrange
@@ -44,6 +47,7 @@ def test_to_dict_missing_title():
     assert result["title"] is None
     assert result["description"] == "watr 4evr"
 
+
 def test_to_dict_missing_description():
     # Arrange
     test_data = Book(id = 1,
@@ -57,3 +61,54 @@ def test_to_dict_missing_description():
     assert result["id"] == 1
     assert result["title"] == "Ocean Book"
     assert result["description"] is None
+    
+    
+# def test_from_dict_returns_book():
+#     # Arrange
+#     book_data = {
+#         "title": "New Book",
+#         "description": "The Best!"
+#     }
+
+#     # Act
+#     new_book = Book.from_dict(book_data)
+
+#     # Assert
+#     assert new_book.title == "New Book"
+#     assert new_book.description == "The Best!"
+    
+# def test_from_dict_with_no_title():
+#     # Arrange
+#     book_data = {
+#         "description": "The Best!"
+#     }
+
+#     # Act & Assert
+#     with pytest.raises(KeyError, match = 'title'):
+#         new_book = Book.from_dict(book_data)
+
+# def test_from_dict_with_no_description():
+#     # Arrange
+#     book_data = {
+#         "title": "New Book"
+#     }
+
+#     # Act & Assert
+#     with pytest.raises(KeyError, match = 'description'):
+#         new_book = Book.from_dict(book_data)
+        
+# def test_from_dict_with_extra_keys():
+#     # Arrange
+#     book_data = {
+#         "extra": "some stuff",
+#         "title": "New Book",
+#         "description": "The Best!",
+#         "another": "last value"
+#     }
+    
+#     # Act
+#     new_book = Book.from_dict(book_data)
+
+#     # Assert
+#     assert new_book.title == "New Book"
+#     assert new_book.description == "The Best!"

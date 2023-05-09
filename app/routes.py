@@ -65,14 +65,20 @@ def create_book():
     
     # error checking/ input validation
     # fixes 500 internal error for invalid request
-    if "title" not in request_body or "description" not in request_body:
-        return make_response("Invalid request", 400)
+    if "title" not in request_body:
+        raise KeyError("title")
     
+    elif "description" not in request_body:
+        raise KeyError("description")
     # creates a variable to hold the new instance of Book using the data in request_body. 
     # title = & description = are keyword arguments that match our model attributes, 
     # and access the request_body values to create the Book instance
-    new_book = Book(title= request_body["title"], 
-                    description = request_body["description"])
+    
+    # new_book = Book(title= request_body["title"], 
+    #                 description = request_body["description"])
+    
+    # refactor
+    new_book = Book.from_dict(request_body)
     
     # the database's way of collecting changes(add(new_book)) that need to be made
     db.session.add(new_book)
@@ -84,7 +90,7 @@ def create_book():
     # (parameter) is the HTTP response body as a string, 
     # unless we have more specific requirements
     # 201 response code, 200 is the default
-    return make_response(f"Book {new_book.title} successfully created", 201)
+    return make_response(jsonify(f"Book {new_book.title} successfully created"), 201)
     
 #     # can also return the response implicitly as a tuple:
 #     # and return default 200 status code
@@ -160,7 +166,6 @@ def delete_book(book_id):
     db.session.commit()
 
     return make_response(jsonify(f"Book #{book.id} successfully deleted"))
-
 
 
 
