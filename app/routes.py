@@ -36,19 +36,19 @@ books_bp = Blueprint("books_bp", __name__, url_prefix="/books")
 #    abort(make_response({"message":f"book {book_id} not found"}, 404))
 
 # refactored:
-def validate_model(cls, book_id):
+def validate_model(cls, model_id):
     try:
-        book_id = int(book_id)
+        model_id = int(model_id)
     except:
-        abort(make_response({"message":f"{cls.__name__} {book_id} invalid"}, 400))
+        abort(make_response({"message":f"{cls.__name__} {model_id} invalid"}, 400))
 
     # book = Book.query.get(book_id)
-    book = cls.query.get(book_id)
+    model = cls.query.get(model_id)
 
-    if not book:
-        abort(make_response({"message":f"{cls.__name__} {book_id} not found"}, 404))
+    if not model:
+        abort(make_response({"message":f"{cls.__name__} {model_id} not found"}, 404))
 
-    return book
+    return model
 
 
 # ==================== CREATE BOOK: POST to /books
