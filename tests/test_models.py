@@ -1,4 +1,5 @@
 from app.models.book import Book
+from app.routes import validate_model
 import pytest
 
 
