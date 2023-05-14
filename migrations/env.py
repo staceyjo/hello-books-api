@@ -94,3 +94,6 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
+
+SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://postgres:postgres@localhost:5432/hello_books_development'
+SQLALCHEMY_TEST_DATABASE_URI='postgresql+psycopg2://postgres:postgres@localhost:5432/hello_books_test'
