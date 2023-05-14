@@ -36,13 +36,14 @@ books_bp = Blueprint("books_bp", __name__, url_prefix="/books")
 #    abort(make_response({"message":f"book {book_id} not found"}, 404))
 
 # refactored:
-def validate_book(book_id):
+def validate_book(cls, book_id):
     try:
         book_id = int(book_id)
     except:
         abort(make_response({"message":f"book {book_id} invalid"}, 400))
 
-    book = Book.query.get(book_id)
+    # book = Book.query.get(book_id)
+    book = cls.query.get(book_id)
 
     if not book:
         abort(make_response({"message":f"book {book_id} not found"}, 404))
@@ -132,7 +133,7 @@ def read_one_book(book_id):
 # before refactor
 #     book = Book.query.get(book_id)
 # after refactor
-    book = validate_book(book_id)
+    book = validate_book(Book, book_id)
 # original
 #     return {
 #           "id": book.id,
@@ -145,7 +146,7 @@ def read_one_book(book_id):
 #  ==================== UPDATE: PUT to /books/<book_id>
 @books_bp.route("/<book_id>", methods=["PUT"])
 def update_book(book_id):
-    book = validate_book(book_id)
+    book = validate_book(Book, book_id)
 
     request_body = request.get_json()
 
@@ -160,7 +161,7 @@ def update_book(book_id):
 #  ==================== DELETE: DELETE to /books/<book_id>
 @books_bp.route("/<book_id>", methods=["DELETE"])
 def delete_book(book_id):
-    book = validate_book(book_id)
+    book = validate_book(Book, book_id)
 
     db.session.delete(book)
     db.session.commit()

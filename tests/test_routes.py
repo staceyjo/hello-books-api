@@ -2,6 +2,7 @@ from blinker import signal
 import pytest
 from werkzeug.exceptions import HTTPException
 from app.routes import validate_book
+from app.models.book import Book
 
 
 def test_get_all_books_with_no_records(client):
@@ -225,7 +226,9 @@ def test_delete_book_invalid_id(client, two_saved_books):
 
 def test_validate_book(two_saved_books):
     # Act
-    result_book = validate_book(1)
+    # result_book = validate_book(1)
+    # Add `Book` argument to `validate_book` invocation
+    result_book = validate_book(Book, 1)
 
     # Assert
     assert result_book.id == 1
@@ -237,11 +240,11 @@ def test_validate_book_missing_record(two_saved_books):
     # Calling `validate_book` without being invoked by a route will
     # cause an `HTTPException` when an `abort` statement is reached 
     with pytest.raises(HTTPException):
-        result_book = validate_book("3")
+        result_book = validate_book(Book,"3")
     
 def test_validate_book_invalid_id(two_saved_books):
     # Act & Assert
     # Calling `validate_book` without being invoked by a route will
     # cause an `HTTPException` when an `abort` statement is reached 
     with pytest.raises(HTTPException):
-        result_book = validate_book("cat")
+        result_book = validate_book(Book, "cat")
